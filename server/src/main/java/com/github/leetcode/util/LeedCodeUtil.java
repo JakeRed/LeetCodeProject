@@ -196,4 +196,41 @@ public class LeedCodeUtil {
         }
         return result;
     }
+
+    /**
+     * https://leetcode-cn.com/problems/string-to-integer-atoi/
+     * @param s
+     * @return
+     */
+    public static int myAtoi(String s) {
+        int result = 0;
+        s = s.trim();
+        if (s.length() > 0){
+            char[] res = s.toCharArray();
+            StringBuilder str = new StringBuilder();
+            boolean isPositive = res[0] != '-';
+            int i = (res[0] == '-' || res[0] == '+')?1:0;
+            boolean notzero = true;
+            for (; i < res.length && str.length() <= 11;i++){
+                if (Character.isDigit(res[i])){
+                    if (notzero){
+                        notzero = res[i] == '0';
+                    }
+                    if (!notzero)
+                        str.append(res[i]);
+                } else {
+                    break;
+                }
+            }
+            if (str .length() > 0 && str.length() < 10){
+                result = isPositive?Integer.parseInt(String.valueOf(str)):-Integer.parseInt(String.valueOf(str));
+            } else if (str.length() == 10){
+                long temp = isPositive?Long.parseLong(String.valueOf(str)):-Long.parseLong(String.valueOf(str));
+                result = (temp > Integer.MAX_VALUE || temp < Integer.MIN_VALUE)?(isPositive?Integer.MAX_VALUE:Integer.MIN_VALUE): (int) temp;
+            } else if (str.length() > 10){
+                result = isPositive?Integer.MAX_VALUE:Integer.MIN_VALUE;
+            }
+        }
+        return result;
+    }
 }
