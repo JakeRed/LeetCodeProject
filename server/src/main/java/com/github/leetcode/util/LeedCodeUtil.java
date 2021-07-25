@@ -233,4 +233,25 @@ public class LeedCodeUtil {
         }
         return result;
     }
+
+    /**
+     * https://leetcode-cn.com/problems/container-with-most-water/
+     * @param height
+     * @return
+     */
+    public static int maxArea(int[] height) {
+        int left = 0;
+        int right = height.length - 1;
+        int result = 0;
+        while (left < right){
+            result = Math.max(result,Math.min(height[left],height[right])*(right-left));
+            if (height[left] > height[right]){
+                right --;
+            } else {
+                left ++;
+            }
+        }
+        return result;
+    }
+
 }

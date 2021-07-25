@@ -5,7 +5,8 @@ import com.github.leetcode.util.LeedCodeUtil;
 public class RESTServer {
 
     public static void main(String[] args) {
-        System.out.println(LeedCodeUtil.myAtoi("42"));
+        int[] height = new int[]{1,2,1};
+        System.out.println(LeedCodeUtil.maxArea(height));
 //        System.out.println(LeedCodeUtil.myAtoi("   -42"));
 //        System.out.println(LeedCodeUtil.myAtoi("4193 with words"));
 //        System.out.println(LeedCodeUtil.myAtoi("words and 987"));

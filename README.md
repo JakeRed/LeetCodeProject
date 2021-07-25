@@ -1,5 +1,32 @@
 # LeetCodeProject
 
+## 盛最多水的容器
+题目链接：https://leetcode-cn.com/problems/container-with-most-water
+解题思路：首页想到的其实是权重，但是花了快1个半小时没解出来，就觉得想法可能不对，还是需要循环去计算。这里也大概说下我权重的想法：
+     就是想着去找left的坐标和right的坐标，初步是然后left按x轴值heigh[left]当结果，right按height-x轴值height[right]当结果，
+     然后循环一遍把left和right找出来，但是负责在要处理这个权重，height[n]不能当结果，要受数据短板的限制，所以真要比较还需要在循环，
+     所以这个想法应该是错的，或者说会很复杂，就放弃了。
+
+最后解题思路： 后来想到了动态规划，那就循环一遍吧，left=0；right=length-1；左右比较大小后往中间移动，保证数据没遗漏掉大的结果，然后比较返回。
+```
+   public static int maxArea(int[] height) {
+        int left = 0;
+        int right = height.length - 1;
+        int result = 0;
+        while (left < right){
+            result = Math.max(result,Math.min(height[left],height[right])*(right-left));
+            if (height[left] > height[right]){
+                right --;
+            } else {
+                left ++;
+            }
+        }
+        return result;
+    }
+```
+
+
+
 ## 字符串转换整数 (atoi)
 题目链接: https://leetcode-cn.com/problems/string-to-integer-atoi
 解题思路: 去掉前导空格，然后判断正负，接着拼接字符串，介于越界的问题，加入Long型参数来防治。
