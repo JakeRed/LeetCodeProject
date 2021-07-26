@@ -1,5 +1,7 @@
 package com.github.leetcode.util;
 
+import com.github.leetcode.entity.ListNode;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -250,6 +252,57 @@ public class LeedCodeUtil {
             } else {
                 left ++;
             }
+        }
+        return result;
+    }
+
+
+    /**
+     * https://leetcode-cn.com/problems/remove-nth-node-from-end-of-list/
+     * 执行用时：
+     * 0 ms
+     * , 在所有 Java 提交中击败了
+     * 100.00%
+     * 的用户
+     * 内存消耗：
+     * 36.3 MB
+     * , 在所有 Java 提交中击败了
+     * 76.16%
+     * 的用户
+     * @param head
+     * @param n
+     * @return
+     */
+    public static int cur = 0;
+    public static ListNode removeNthFromEnd(ListNode head, int n) {
+        if(head == null) return null;
+        head.next = removeNthFromEnd(head.next,n);
+        cur ++;
+        if(n==cur) return head.next;
+        return head;
+    }
+
+    /**
+     * https://leetcode-cn.com/problems/remove-nth-node-from-end-of-list/
+     * @param head
+     * @param n
+     * @return
+     */
+    public static ListNode removeNthFromEndV2(ListNode head, int n) {
+        ListNode result = head;
+        List<ListNode> listNodes = new ArrayList<>();
+        listNodes.add(result);
+        ListNode temp = head;
+        while (temp != null && temp.next != null){
+            listNodes.add(temp.next);
+            temp = temp.next;
+        }
+        if (listNodes.size() - n - 1 >= 0){
+            listNodes.get(listNodes.size() - n - 1).next =  n>1?listNodes.get(listNodes.size() - n + 1):null;
+        } else if (listNodes.size() == n){
+            result = result.next;
+        } else {
+            result = null;
         }
         return result;
     }
