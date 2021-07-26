@@ -1,5 +1,20 @@
 # LeetCodeProject
 
+## 删除链表的倒数第 N 个结点
+题目链接：https://leetcode-cn.com/problems/remove-nth-node-from-end-of-list/
+解题思路：递归去循环链表，然后循环到最后节点反加flag，这样能通过n==flag来实现去掉倒数第n个结点。
+
+```
+    public static int cur = 0;
+    public static ListNode removeNthFromEnd(ListNode head, int n) {
+        if(head == null) return null;
+        head.next = removeNthFromEnd(head.next,n);
+        cur ++;
+        if(n==cur) return head.next;
+        return head;
+    }
+```
+
 ## 盛最多水的容器
 题目链接：https://leetcode-cn.com/problems/container-with-most-water
 解题思路：首页想到的其实是权重，但是花了快1个半小时没解出来，就觉得想法可能不对，还是需要循环去计算。这里也大概说下我权重的想法：
