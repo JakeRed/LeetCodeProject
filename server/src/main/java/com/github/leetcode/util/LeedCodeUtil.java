@@ -4,6 +4,7 @@ import com.github.leetcode.entity.ListNode;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -306,5 +307,68 @@ public class LeedCodeUtil {
         }
         return result;
     }
+
+    /**
+     * https://leetcode-cn.com/problems/zigzag-conversion/
+     * @param s
+     * @param numRows
+     * @return
+     */
+    public static String convert(String s, int numRows) {
+        StringBuilder result = new StringBuilder();
+        char[] list = s.toCharArray();
+        HashMap<Integer,List<Character>> hashMap = new HashMap<>();
+        int i = 0;
+        boolean positive_direction = true;
+        for (Character item: list){
+            if (hashMap.get(i) == null){
+                hashMap.put(i,new ArrayList<>());
+            }
+            hashMap.get(i).add(item);
+            if (!positive_direction){
+                if (i > 0){
+                    i--;
+                } else {
+                    i++;
+                    positive_direction = true;
+                }
+            } else if (i + 1 < numRows){
+                i++;
+            } else if (i > 0){
+                i--;
+                positive_direction = false;
+            }
+        }
+
+        for (int a = 0; a < numRows; a++){
+            if (hashMap.get(a) == null){
+                break;
+            }
+            for (Character character:hashMap.get(a)){
+                result.append(character);
+            }
+        }
+        return result.toString();
+    }
+
+//    /**
+//     * 对于n行的, s中的第i个字符：
+//     * i%(2n-2) == n-1 ----> row(n-1)
+//     * @param s
+//     * @param numRows
+//     * @return
+//     */
+//    public static String convert1(String s, int numRows){
+//        char[] list = s.toCharArray();
+//        StringBuilder stringBuilder = new StringBuilder();
+//        for (int i = 0; i < list.length; i++){
+//            if (numRows-1 == 0){
+//                return s;
+//            }if (i%(2*numRows-2) == numRows-1){
+//                System.out.println(list[i]);
+//            }
+//        }
+//        return "--";
+//    }
 
 }

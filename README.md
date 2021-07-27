@@ -1,5 +1,48 @@
 # LeetCodeProject
 
+##  Z 字形变换
+<br>题目链接：https://leetcode-cn.com/problems/zigzag-conversion// </br>
+<br>解题思路：目前的想法是按Z字形去循环，然后用hashmap来存rowN（第N行）的数据，然后for循环hashmap返回字符串，目前还有个想法是找规律，目前稍微有点眉目。</br>
+```
+  public static String convert(String s, int numRows) {
+        StringBuilder result = new StringBuilder();
+        char[] list = s.toCharArray();
+        HashMap<Integer,List<Character>> hashMap = new HashMap<>();
+        int i = 0;
+        boolean positive_direction = true;
+        for (Character item: list){
+            if (hashMap.get(i) == null){
+                hashMap.put(i,new ArrayList<>());
+            }
+            hashMap.get(i).add(item);
+            if (!positive_direction){
+                if (i > 0){
+                    i--;
+                } else {
+                    i++;
+                    positive_direction = true;
+                }
+            } else if (i + 1 < numRows){
+                i++;
+            } else if (i > 0){
+                i--;
+                positive_direction = false;
+            }
+        }
+
+        for (int a = 0; a < numRows; a++){
+            if (hashMap.get(a) == null){
+                break;
+            }
+            for (Character character:hashMap.get(a)){
+                result.append(character);
+            }
+        }
+        return result.toString();
+    }
+```
+
+
 ## 删除链表的倒数第 N 个结点
 <br>题目链接：https://leetcode-cn.com/problems/remove-nth-node-from-end-of-list/ </br>
 <br>解题思路：递归去循环链表，然后循环到最后节点反加flag，这样能通过n==flag来实现去掉倒数第n个结点。</br>
