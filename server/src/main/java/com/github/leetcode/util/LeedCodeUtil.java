@@ -5,6 +5,7 @@ import com.github.leetcode.entity.ListNode;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -351,24 +352,45 @@ public class LeedCodeUtil {
         return result.toString();
     }
 
-//    /**
-//     * 对于n行的, s中的第i个字符：
-//     * i%(2n-2) == n-1 ----> row(n-1)
-//     * @param s
-//     * @param numRows
-//     * @return
-//     */
-//    public static String convert1(String s, int numRows){
-//        char[] list = s.toCharArray();
-//        StringBuilder stringBuilder = new StringBuilder();
-//        for (int i = 0; i < list.length; i++){
-//            if (numRows-1 == 0){
-//                return s;
-//            }if (i%(2*numRows-2) == numRows-1){
-//                System.out.println(list[i]);
-//            }
-//        }
-//        return "--";
-//    }
-
+    /**
+     * 对于=numRows行的, s中的第i个字符，j为第j行，满足
+     * i%(2n-2) == j & 2n-2-j ----> rowJ
+     * @param s
+     * @param numRows
+     * @return
+     */
+    public static String convertBackup(String s, int numRows){
+        char[] list = s.toCharArray();
+        if (numRows <= 1){
+            return s;
+        }
+        StringBuilder stringBuilder = new StringBuilder();
+        int j = 0;
+        boolean positive_direction = true;
+        int[] arr = new int[numRows];
+        for (int i = 0; i < list.length; i++){
+            while (i%(2*(numRows-1)) == j || i%(2*(numRows-1)) == 2*(numRows-1) - j){
+                int offset = 0;
+                for (int k = 0; k <= j;k++){
+                    offset += arr[k];
+                }
+                stringBuilder.insert(offset,list[i]);
+                arr[j]++;
+                if (!positive_direction){
+                    if (j > 0){
+                        j--;
+                    } else {
+                        j++;
+                        positive_direction = true;
+                    }
+                } else if (j + 1 < numRows){
+                    j++;
+                } else if (j > 0){
+                    j--;
+                    positive_direction = false;
+                }
+            }
+        }
+        return stringBuilder.toString();
+    }
 }

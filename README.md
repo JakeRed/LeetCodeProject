@@ -2,7 +2,8 @@
 
 ##  Z 字形变换
 <br>题目链接：https://leetcode-cn.com/problems/zigzag-conversion// </br>
-<br>解题思路：目前的想法是按Z字形去循环，然后用hashmap来存rowN（第N行）的数据，然后for循环hashmap返回字符串，目前还有个想法是找规律，目前稍微有点眉目。</br>
+<br>解题思路：目前的想法是按Z字形去循环，然后用hashmap来存rowN（第N行）的数据，然后for循环hashmap返回字符串，另外通过找规律也简化了这道题，但是运行的效果还不如循环，
+公式：(i%(2n-2) == j & 2n-2-j ----> rowJ)。代码目前没删除，还想找更优解</br>
 ```
   public static String convert(String s, int numRows) {
         StringBuilder result = new StringBuilder();
