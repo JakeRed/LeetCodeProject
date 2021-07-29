@@ -1,7 +1,37 @@
 # LeetCodeProject
 
+## 最长公共前缀
+<br>题目链接：https://leetcode-cn.com/problems/longest-common-prefix/ </br>
+<br>解题思路：定义数组最长度为length，默认给第1个str，后续while循环第一遍的时候修正length，然后去strs里面循环找相同index下的值是否相同，不同就return</br>
+
+```
+    public String longestCommonPrefix(String[] strs) {
+        if (strs.length ==0){
+            return "";
+        }
+        StringBuilder result = new StringBuilder();
+        int length = strs[0].length();
+        int index = 0;
+        while(index < length && strs[0].length() > 0){
+            char temp = strs[0].charAt(index);
+            for (int i = 1; i < strs.length;i++){
+                if (index == 0){
+                    length = Math.min(length,strs[i].length());
+                }
+                if (length == 0 || temp != strs[i].charAt(index)){
+                    return result.toString();
+                }
+            }
+            result.append(temp);
+            index ++;
+        }
+        return result.toString();
+    }
+```
+
+
 ##  Z 字形变换
-<br>题目链接：https://leetcode-cn.com/problems/zigzag-conversion// </br>
+<br>题目链接：https://leetcode-cn.com/problems/zigzag-conversion/ </br>
 <br>解题思路：目前的想法是按Z字形去循环，然后用hashmap来存rowN（第N行）的数据，然后for循环hashmap返回字符串，另外通过找规律也简化了这道题，但是运行的效果还不如循环，
 公式：(i%(2n-2) == j & 2n-2-j ----> rowJ)。代码目前没删除，还想找更优解</br>
 ```

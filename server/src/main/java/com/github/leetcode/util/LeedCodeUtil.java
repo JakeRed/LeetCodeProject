@@ -393,4 +393,42 @@ public class LeedCodeUtil {
         }
         return stringBuilder.toString();
     }
+
+    /**
+     * https://leetcode-cn.com/problems/longest-common-prefix/
+     * 执行用时：
+     * 1 ms
+     * , 在所有 Java 提交中击败了
+     * 80.99%
+     * 的用户
+     * 内存消耗：
+     * 36.2 MB
+     * , 在所有 Java 提交中击败了
+     * 93.08%
+     * 的用户
+     * @param strs
+     * @return
+     */
+    public static String longestCommonPrefix(String[] strs) {
+        if (strs.length ==0){
+            return "";
+        }
+        StringBuilder result = new StringBuilder();
+        int length = strs[0].length();
+        int index = 0;
+        while(index < length && strs[0].length() > 0){
+            char temp = strs[0].charAt(index);
+            for (int i = 1; i < strs.length;i++){
+                if (index == 0){
+                    length = Math.min(length,strs[i].length());
+                }
+                if (length == 0 || temp != strs[i].charAt(index)){
+                    return result.toString();
+                }
+            }
+            result.append(temp);
+            index ++;
+        }
+        return result.toString();
+    }
 }

@@ -8,7 +8,8 @@ import jdk.nashorn.internal.parser.JSONParser;
 public class RESTServer {
 
     public static void main(String[] args) {
-        System.out.println("result:" + LeedCodeUtil.convert("123456789",3));
+        String[] res = new String[]{"abab","aba",""};
+        System.out.println("result:" + LeedCodeUtil.longestCommonPrefix(res));
 //        System.out.println(LeedCodeUtil.myAtoi("4193 with words"));
 //        System.out.println(LeedCodeUtil.myAtoi("words and 987"));
 //        System.out.println(LeedCodeUtil.myAtoi("-91283472332"));
