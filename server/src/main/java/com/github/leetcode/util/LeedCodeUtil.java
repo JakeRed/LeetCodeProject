@@ -5,7 +5,6 @@ import com.github.leetcode.entity.ListNode;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -430,5 +429,78 @@ public class LeedCodeUtil {
             index ++;
         }
         return result.toString();
+    }
+
+    /**
+     * https://leetcode-cn.com/problems/letter-combinations-of-a-phone-number/
+     * @param digits
+     * 执行用时：
+     * 5 ms
+     * , 在所有 Java 提交中击败了
+     * 21.80%
+     * 的用户
+     * 内存消耗：
+     * 38.6 MB
+     * , 在所有 Java 提交中击败了
+     * 19.06%
+     * 的用户
+     * @return
+     */
+    public static List<String> letterCombinations(String digits) {
+        if (digits.length() == 0){
+            return new ArrayList<>();
+        }
+        char[] arrs = digits.toCharArray();
+        List<String> result = new ArrayList<>();
+        List<char[]> tempChar = new ArrayList<>();
+        for (int i = 0; i < arrs.length; i++){
+            switch (arrs[i]){
+                case '2':
+                    tempChar.add((new char[]{'a','b','c'}));
+                     break;
+                case '3':
+                    tempChar.add((new char[]{'d','e','f'}));
+                    break;
+                case '4':
+                    tempChar.add((new char[]{'g','h','i'}));
+                    break;
+                case '5':
+                    tempChar.add((new char[]{'j','k','l'}));
+                    break;
+                case '6':
+                    tempChar.add((new char[]{'m','n','o'}));
+                    break;
+                case '7':
+                    tempChar.add((new char[]{'p','q','r','s'}));
+                    break;
+                case '8':
+                    tempChar.add((new char[]{'t','u','v'}));
+                    break;
+                case '9':
+                    tempChar.add((new char[]{'w','x','y','z'}));
+                    break;
+            }
+        }
+        for (Character s: tempChar.get(0)){
+            result.add(String.valueOf(s));
+        }
+        int index = 1;
+        while (index < tempChar.size()){
+            result = getSubString(result, tempChar.get(index));
+            index ++;
+        }
+        return result;
+    }
+
+    public static List<String> getSubString(List<String> stringBuilderList, char[] list){
+        List<String> stringBuilders = new ArrayList<>();
+        for (int i = 0; i < stringBuilderList.size(); i++){
+            for (int j = 0; j < list.length; j++){
+                String s = stringBuilderList.get(i);
+                s += list[j];
+                stringBuilders.add(s);
+            }
+        }
+        return stringBuilders;
     }
 }

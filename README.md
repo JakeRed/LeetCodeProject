@@ -1,5 +1,70 @@
 # LeetCodeProject
 
+## 电话号码的字母组合
+<br>题目链接：https://leetcode-cn.com/problems/letter-combinations-of-a-phone-number/ </br>
+<br>解题思路：首先映射到char[]，其次进行list的循环扩展，通过getSubString把list<string>扩大返回在循环读下一组char[],方法还是很常规，效率有所欠缺。</br>
+
+```
+   public List<String> letterCombinations(String digits) {
+        if (digits.length() == 0){
+            return new ArrayList<>();
+        }
+        char[] arrs = digits.toCharArray();
+        List<String> result = new ArrayList<>();
+        List<char[]> tempChar = new ArrayList<>();
+        for (int i = 0; i < arrs.length; i++){
+            switch (arrs[i]){
+                case '2':
+                    tempChar.add((new char[]{'a','b','c'}));
+                     break;
+                case '3':
+                    tempChar.add((new char[]{'d','e','f'}));
+                    break;
+                case '4':
+                    tempChar.add((new char[]{'g','h','i'}));
+                    break;
+                case '5':
+                    tempChar.add((new char[]{'j','k','l'}));
+                    break;
+                case '6':
+                    tempChar.add((new char[]{'m','n','o'}));
+                    break;
+                case '7':
+                    tempChar.add((new char[]{'p','q','r','s'}));
+                    break;
+                case '8':
+                    tempChar.add((new char[]{'t','u','v'}));
+                    break;
+                case '9':
+                    tempChar.add((new char[]{'w','x','y','z'}));
+                    break;
+            }
+        }
+        for (Character s: tempChar.get(0)){
+            result.add(String.valueOf(s));
+        }
+        int index = 1;
+        while (index < tempChar.size()){
+            result = getSubString(result, tempChar.get(index));
+            index ++;
+        }
+        return result;
+    }
+
+    public List<String> getSubString(List<String> stringBuilderList, char[] list){
+        List<String> stringBuilders = new ArrayList<>();
+        for (int i = 0; i < stringBuilderList.size(); i++){
+            for (int j = 0; j < list.length; j++){
+                String s = stringBuilderList.get(i);
+                s += list[j];
+                stringBuilders.add(s);
+            }
+        }
+        return stringBuilders;
+    }
+```
+
+
 ## 最长公共前缀
 <br>题目链接：https://leetcode-cn.com/problems/longest-common-prefix/ </br>
 <br>解题思路：定义数组最长度为length，默认给第1个str，后续while循环第一遍的时候修正length，然后去strs里面循环找相同index下的值是否相同，不同就return</br>
