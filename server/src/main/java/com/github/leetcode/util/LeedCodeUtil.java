@@ -4,6 +4,7 @@ import com.github.leetcode.entity.ListNode;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -11,6 +12,24 @@ import java.util.List;
  * 刷题util
  */
 public class LeedCodeUtil {
+
+    private LeedCodeUtil(){
+
+    }
+
+    /**
+     * 单例
+     * @return
+     */
+    public static LeedCodeUtil getInstance(){
+        return SingletonHolder.INSTANCE;
+    }
+
+
+    private static class SingletonHolder {
+        private static final LeedCodeUtil INSTANCE = new LeedCodeUtil();
+    }
+
     /**
      * 无重复字符的最长子串
      * @param s
@@ -26,7 +45,7 @@ public class LeedCodeUtil {
      * 5.51%
      * 的用户
      */
-    public static int lengthOfLongestSubstring(String s){
+    public int lengthOfLongestSubstring(String s){
         StringBuilder result = new StringBuilder();
         int maxLength = 0;
         for(int i = 0;i < s.length();i++){
@@ -58,7 +77,7 @@ public class LeedCodeUtil {
      * 54.83%
      * 的用户
      */
-    public static String longestPalindrome(String s){
+    public String longestPalindrome(String s){
         char[] res = s.toCharArray();
         int[] range = new int[2];
         for (int i = 0;i < res.length;i++){
@@ -95,7 +114,7 @@ public class LeedCodeUtil {
      * @param nums
      * @return
      */
-    public static List<List<Integer>> threeSum(int[] nums) {
+    public List<List<Integer>> threeSum(int[] nums) {
         List<List<Integer>> result = new ArrayList<>();
         if (nums.length < 3){
             return result;
@@ -138,7 +157,7 @@ public class LeedCodeUtil {
      * @param s
      * @return
      */
-    public static int romanToInt(String s) {
+    public int romanToInt(String s) {
         int result = 0;
         char[] res = s.toCharArray();
         for (int i = res.length -1; i >=0; i--){
@@ -205,7 +224,7 @@ public class LeedCodeUtil {
      * @param s
      * @return
      */
-    public static int myAtoi(String s) {
+    public int myAtoi(String s) {
         int result = 0;
         s = s.trim();
         if (s.length() > 0){
@@ -242,7 +261,7 @@ public class LeedCodeUtil {
      * @param height
      * @return
      */
-    public static int maxArea(int[] height) {
+    public int maxArea(int[] height) {
         int left = 0;
         int right = height.length - 1;
         int result = 0;
@@ -274,8 +293,8 @@ public class LeedCodeUtil {
      * @param n
      * @return
      */
-    public static int cur = 0;
-    public static ListNode removeNthFromEnd(ListNode head, int n) {
+    public int cur = 0;
+    public ListNode removeNthFromEnd(ListNode head, int n) {
         if(head == null) return null;
         head.next = removeNthFromEnd(head.next,n);
         cur ++;
@@ -289,7 +308,7 @@ public class LeedCodeUtil {
      * @param n
      * @return
      */
-    public static ListNode removeNthFromEndV2(ListNode head, int n) {
+    public ListNode removeNthFromEndV2(ListNode head, int n) {
         ListNode result = head;
         List<ListNode> listNodes = new ArrayList<>();
         listNodes.add(result);
@@ -314,7 +333,7 @@ public class LeedCodeUtil {
      * @param numRows
      * @return
      */
-    public static String convert(String s, int numRows) {
+    public String convert(String s, int numRows) {
         StringBuilder result = new StringBuilder();
         char[] list = s.toCharArray();
         HashMap<Integer,List<Character>> hashMap = new HashMap<>();
@@ -358,7 +377,7 @@ public class LeedCodeUtil {
      * @param numRows
      * @return
      */
-    public static String convertBackup(String s, int numRows){
+    public String convertBackup(String s, int numRows){
         char[] list = s.toCharArray();
         if (numRows <= 1){
             return s;
@@ -408,7 +427,7 @@ public class LeedCodeUtil {
      * @param strs
      * @return
      */
-    public static String longestCommonPrefix(String[] strs) {
+    public String longestCommonPrefix(String[] strs) {
         if (strs.length ==0){
             return "";
         }
@@ -446,7 +465,7 @@ public class LeedCodeUtil {
      * 的用户
      * @return
      */
-    public static List<String> letterCombinations(String digits) {
+    public List<String> letterCombinations(String digits) {
         if (digits.length() == 0){
             return new ArrayList<>();
         }
@@ -492,7 +511,7 @@ public class LeedCodeUtil {
         return result;
     }
 
-    public static List<String> getSubString(List<String> stringBuilderList, char[] list){
+    public List<String> getSubString(List<String> stringBuilderList, char[] list){
         List<String> stringBuilders = new ArrayList<>();
         for (int i = 0; i < stringBuilderList.size(); i++){
             for (int j = 0; j < list.length; j++){
@@ -502,5 +521,55 @@ public class LeedCodeUtil {
             }
         }
         return stringBuilders;
+    }
+
+    /**
+     * 20. 有效的括号
+     * https://leetcode-cn.com/problems/valid-parentheses/
+     * @param s
+     * @return
+     */
+    public boolean isValid(String s) {
+        if (s == null || s.length() <= 0){
+            return true;
+        }
+        char[] chars = s.toCharArray();
+        java.util.Stack<Character> stack = new java.util.Stack<>();
+        for (Character character : chars){
+            if (character == '{' || character == '[' || character == '('){
+                stack.push(character);
+            } else {
+                if (stack.isEmpty()) {
+                    return false;
+                }
+                char topChar = stack.pop();
+                if (topChar != character - 1 && topChar != character - 2){
+                    return false;
+                }
+            }
+        }
+        return stack.isEmpty();
+    }
+
+    /**
+     * 括号生成
+     * https://leetcode-cn.com/problems/generate-parentheses/
+     * @param n
+     * @return
+     */
+    public List<String> generateParenthesis(int n) {
+        if (n <= 1){
+            return Collections.singletonList("()");
+        }
+        List<String> returnString = new ArrayList<>();
+        for (String s:generateParenthesis(--n)){
+            for (int i = 0; i <= s.length(); i++){
+                String temp = new StringBuilder(s).insert(i,"()").toString();
+                if (!returnString.contains(temp)){
+                    returnString.add(temp);
+                }
+            }
+        }
+        return returnString;
     }
 }

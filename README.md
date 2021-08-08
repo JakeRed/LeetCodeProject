@@ -1,5 +1,55 @@
 # LeetCodeProject
 
+## 括号生成
+<br>题目链接：https://leetcode-cn.com/problems/generate-parentheses/ </br>
+<br>解题思路：首先想到的是递归，化大为小，从2开始入手，只不过是把()插入到()中去，得到()(),(()),那么3就是在2的基础上插入()，这样递归就变得很简单了</br>
+
+```
+    public List<String> generateParenthesis(int n) {
+        if (n <= 1){
+            return Collections.singletonList("()");
+        }
+        List<String> returnString = new ArrayList<>();
+        for (String s:generateParenthesis(--n)){
+            for (int i = 0; i <= s.length(); i++){
+                String temp = new StringBuilder(s).insert(i,"()").toString();
+                if (!returnString.contains(temp)){
+                    returnString.add(temp);
+                }
+            }
+        }
+        return returnString;
+    }
+```
+
+## 有效的括号
+<br>题目链接：https://leetcode-cn.com/problems/valid-parentheses/ </br>
+<br>解题思路：用栈顶元素去对比for循环元素是否能对应上，对应不上就false，对应上了就继续循环，for循环结束之后看stack里面是否还有数据，另外：如果自定义char[]来实现stack的功能，效率会比直接用高</br>
+
+```
+    public boolean isValid(String s) {
+        if (s == null || s.length() <= 0){
+            return true;
+        }
+        char[] chars = s.toCharArray();
+        java.util.Stack<Character> stack = new java.util.Stack<>();
+        for (Character character : chars){
+            if (character == '{' || character == '[' || character == '('){
+                stack.push(character);
+            } else {
+                if (stack.isEmpty()) {
+                    return false;
+                }
+                char topChar = stack.pop();
+                if (topChar != character - 1 && topChar != character - 2){
+                    return false;
+                }
+            }
+        }
+        return stack.isEmpty();
+    }
+```
+
 ## 电话号码的字母组合
 <br>题目链接：https://leetcode-cn.com/problems/letter-combinations-of-a-phone-number/ </br>
 <br>解题思路：首先映射到char[]，其次进行list的循环扩展，通过getSubString把list<string>扩大返回在循环读下一组char[],方法还是很常规，效率有所欠缺。</br>
