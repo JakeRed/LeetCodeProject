@@ -5,6 +5,6 @@ import com.github.leetcode.util.LeedCodeUtil;
 public class RESTServer {
 
     public static void main(String[] args) {
-        System.out.println("result:" + LeedCodeUtil.getInstance().generateParenthesis(3));
+        System.out.println("result:" + LeedCodeUtil.getInstance().strStr("1","a"));
     }
 }

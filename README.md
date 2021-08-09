@@ -1,5 +1,31 @@
 # LeetCodeProject
 
+## 字符串匹配
+<br>题目链接：https://leetcode-cn.com/problems/implement-strstr/ </br>
+<br>解题思路：以haystack长度循环，用needle去匹配，有两层for循环，提交后看了下string.indexOf方法，感觉差异不算太大</br>
+
+```
+    public int strStr(String haystack, String needle) {
+        if (needle.length() == 0) {
+            return 0;
+        }
+        char[] res = haystack.toCharArray();
+        char[] needles = needle.toCharArray();
+        if (res.length < needle.length()) return -1;
+        Loop:for (int i = 0; i < res.length; i++){
+            if (res[i] == needles[0] && i + needles.length <= res.length){
+                for (int j = 1; j < needles.length; j++){
+                    if (res[i + j] != needles[j]){
+                        continue Loop;
+                    }
+                }
+                return i;
+            }
+        }
+        return -1;
+    }
+```
+
 ## 括号生成
 <br>题目链接：https://leetcode-cn.com/problems/generate-parentheses/ </br>
 <br>解题思路：首先想到的是递归，化大为小，从2开始入手，只不过是把()插入到()中去，得到()(),(()),那么3就是在2的基础上插入()，这样递归就变得很简单了</br>

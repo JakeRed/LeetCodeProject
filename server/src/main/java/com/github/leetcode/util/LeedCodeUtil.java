@@ -572,4 +572,31 @@ public class LeedCodeUtil {
         }
         return returnString;
     }
+
+    /**
+     * 28. 实现 strStr()
+     * https://leetcode-cn.com/problems/implement-strstr/
+     * @param haystack
+     * @param needle
+     * @return
+     */
+    public int strStr(String haystack, String needle) {
+        if (needle.length() == 0) {
+            return 0;
+        }
+        char[] res = haystack.toCharArray();
+        char[] needles = needle.toCharArray();
+        if (res.length < needle.length()) return -1;
+        Loop:for (int i = 0; i < res.length; i++){
+            if (res[i] == needles[0] && i + needles.length <= res.length){
+                for (int j = 1; j < needles.length; j++){
+                    if (res[i + j] != needles[j]){
+                        continue Loop;
+                    }
+                }
+                return i;
+            }
+        }
+        return -1;
+    }
 }
