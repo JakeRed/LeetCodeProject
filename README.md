@@ -1,5 +1,113 @@
 # LeetCodeProject
 
+## 四数之和
+<br>题目链接：https://leetcode-cn.com/problems/4sum/</br>
+<br>解题思路：三数之和的基础上套了个循环，算是暴力破解了</br>
+
+```
+    public List<List<Integer>> fourSum(int[] nums,int target) {
+        List<List<Integer>> result = new ArrayList<>();
+        if (nums.length < 4){
+            return result;
+        }
+        Arrays.sort(nums);
+        for (int index = 0; index < nums.length - 3; index++) {
+            int targetTemp = target - nums[index];
+            for (int i = index + 1; i < nums.length; i++) {
+                int maxIndex = nums.length - 1;
+                int minIndex = i + 1;
+                // 左右寻找
+                while (minIndex < maxIndex) {
+                    int sum = nums[i] + nums[minIndex] + nums[maxIndex];
+                    // 表示满足条件
+                    if (sum == targetTemp) {
+                        List<Integer> tmpList = Arrays.asList(nums[index], nums[i], nums[minIndex], nums[maxIndex]);
+                        if (!result.contains(tmpList)) {
+                            result.add(tmpList);
+                        }
+                        while (minIndex < maxIndex && nums[minIndex + 1] == nums[minIndex]) {
+                            minIndex++;
+                        }
+                        while (minIndex < maxIndex && nums[maxIndex - 1] == nums[maxIndex]) {
+                            maxIndex--;
+                        }
+                        maxIndex--;
+                        minIndex++;
+                    } else if (sum > targetTemp) {
+                        maxIndex--;
+                    } else {
+                        minIndex++;
+                    }
+                }
+            }
+        }
+        return result;
+    }
+```
+
+## 下一个排列
+<br>题目链接：https://leetcode-cn.com/problems/next-permutation/</br>
+<br>解题思路：其实就是从数组倒着查找，找到nums[i] 比nums[i+1]小的时候，就将nums[i]跟nums[i+1]到nums[nums.length - 1]当中找到一个最小的比nums[i]大的元素交换。交换后，再把nums[i+1]到nums[nums.length-1]排序</br>
+
+```
+      public void nextPermutation(int[] nums) {
+          int maxIndex = nums.length - 1;
+          while (maxIndex > 0 && nums[maxIndex] <= nums[maxIndex - 1]){
+              maxIndex--;
+          }
+          if (maxIndex != 0){
+              Arrays.sort(nums,maxIndex,nums.length);
+              maxIndex--;
+              for (int i = maxIndex + 1;i < nums.length; i++){
+               if (nums[i] > nums[maxIndex] && nums[i - 1] <= nums[maxIndex]){
+                   int temp = nums[maxIndex];
+                   nums[maxIndex] = nums[i];
+                   nums[i] = temp;
+                   break;
+               }
+              }
+          } else {
+              Arrays.sort(nums);
+          }
+      }
+```
+
+
+## 最接近的三数之和
+<br>题目链接：https://leetcode-cn.com/problems/3sum-closest/</br>
+<br>解题思路：参考三数之和等于0，左右判断while循环</br>
+
+```
+      public int threeSumClosest(int[] nums, int target) {
+          int result = 0;
+          boolean flag = true;
+          Arrays.sort(nums);
+          for (int i = 0; i < nums.length; i++){
+              // 再找一个正数
+              int maxIndex = nums.length - 1;
+              int minIndex = i + 1;
+              // 左右寻找
+              while(minIndex < maxIndex){
+                  int sum = nums[i] + nums[minIndex] + nums[maxIndex];
+                  if (flag || Math.abs(target - sum) < Math.abs(result - target)){
+                      flag = false;
+                      result = sum;
+                      if (result == target) return result;
+                  }
+                  if (sum > target){
+                      maxIndex --;
+                  } else {
+                      minIndex ++;
+                  }
+              }
+          }
+          return result;
+      }
+```
+
+
+
+
 ## 字符串匹配
 <br>题目链接：https://leetcode-cn.com/problems/implement-strstr/ </br>
 <br>解题思路：以haystack长度循环，用needle去匹配，有两层for循环，提交后看了下string.indexOf方法，感觉差异不算太大</br>

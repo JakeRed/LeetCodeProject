@@ -599,4 +599,108 @@ public class LeedCodeUtil {
         }
         return -1;
     }
+
+    /**
+     * 16. 最接近的三数之和
+     * https://leetcode-cn.com/problems/3sum-closest/
+     * @param nums
+     * @param target
+     * @return
+     */
+    public int threeSumClosest(int[] nums, int target) {
+        int result = 0;
+        boolean flag = true;
+        Arrays.sort(nums);
+        for (int i = 0; i < nums.length; i++){
+            // 再找一个正数
+            int maxIndex = nums.length - 1;
+            int minIndex = i + 1;
+            // 左右寻找
+            while(minIndex < maxIndex){
+                int sum = nums[i] + nums[minIndex] + nums[maxIndex];
+                if (flag || Math.abs(target - sum) < Math.abs(result - target)){
+                    flag = false;
+                    result = sum;
+                    if (result == target) return result;
+                }
+                if (sum > target){
+                    maxIndex --;
+                } else {
+                    minIndex ++;
+                }
+            }
+        }
+        return result;
+    }
+
+    /**
+     * 下一个排列
+     * https://leetcode-cn.com/problems/next-permutation/
+     * @param nums
+     */
+    public void nextPermutation(int[] nums) {
+        int maxIndex = nums.length - 1;
+        while (maxIndex > 0 && nums[maxIndex] <= nums[maxIndex - 1]){
+            maxIndex--;
+        }
+        if (maxIndex != 0){
+            Arrays.sort(nums,maxIndex,nums.length);
+            maxIndex--;
+            for (int i = maxIndex + 1;i < nums.length; i++){
+             if (nums[i] > nums[maxIndex] && nums[i - 1] <= nums[maxIndex]){
+                 int temp = nums[maxIndex];
+                 nums[maxIndex] = nums[i];
+                 nums[i] = temp;
+                 break;
+             }
+            }
+        } else {
+            Arrays.sort(nums);
+        }
+    }
+
+    /**
+     *
+     * @param nums
+     * @param target
+     * @return
+     */
+    public List<List<Integer>> fourSum(int[] nums,int target) {
+        List<List<Integer>> result = new ArrayList<>();
+        if (nums.length < 4){
+            return result;
+        }
+        Arrays.sort(nums);
+        for (int index = 0; index < nums.length - 3; index++) {
+            int targetTemp = target - nums[index];
+            for (int i = index + 1; i < nums.length; i++) {
+                int maxIndex = nums.length - 1;
+                int minIndex = i + 1;
+                // 左右寻找
+                while (minIndex < maxIndex) {
+                    int sum = nums[i] + nums[minIndex] + nums[maxIndex];
+                    // 表示满足条件
+                    if (sum == targetTemp) {
+                        List<Integer> tmpList = Arrays.asList(nums[index], nums[i], nums[minIndex], nums[maxIndex]);
+                        if (!result.contains(tmpList)) {
+                            result.add(tmpList);
+                        }
+                        while (minIndex < maxIndex && nums[minIndex + 1] == nums[minIndex]) {
+                            minIndex++;
+                        }
+                        while (minIndex < maxIndex && nums[maxIndex - 1] == nums[maxIndex]) {
+                            maxIndex--;
+                        }
+                        maxIndex--;
+                        minIndex++;
+                    } else if (sum > targetTemp) {
+                        maxIndex--;
+                    } else {
+                        minIndex++;
+                    }
+                }
+            }
+        }
+        return result;
+    }
 }
