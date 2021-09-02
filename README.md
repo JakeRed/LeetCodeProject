@@ -1,5 +1,32 @@
 # LeetCodeProject
 
+## 外观数列
+<br>题目链接：https://leetcode-cn.com/problems/count-and-say/</br>
+<br>解题思路：while 或者递归实现，主要是去对attr数组对比，得到j和j-1的值不相等的时候记录下count，得到的结果在进行下一次while循环</br>
+
+```
+       public String countAndSay(int n) {
+           int i = 1;
+           String result = "1";
+           while (i < n){
+               char[] attrs = result.toCharArray();
+               StringBuilder builder = new StringBuilder();
+               int count = 0;
+               for (int j = 0; j < attrs.length;j++){
+                   if (j-1 >= 0 && attrs[j] != attrs[j-1]){
+                       builder.append(count).append(attrs[j-1]);
+                       count = 0;
+                   }
+                   count ++;
+               }
+               builder.append(count).append(attrs[attrs.length - 1]);
+               result = builder.toString();
+               i++;
+           }
+           return result;
+       }
+```
+
 ## 四数之和
 <br>题目链接：https://leetcode-cn.com/problems/4sum/</br>
 <br>解题思路：三数之和的基础上套了个循环，算是暴力破解了</br>

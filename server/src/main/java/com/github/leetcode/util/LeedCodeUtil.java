@@ -703,4 +703,30 @@ public class LeedCodeUtil {
         }
         return result;
     }
+
+    /**
+     * https://leetcode-cn.com/problems/count-and-say/
+     * @param n
+     * @return
+     */
+    public String countAndSay(int n) {
+        int i = 1;
+        String result = "1";
+        while (i < n){
+            char[] attrs = result.toCharArray();
+            StringBuilder builder = new StringBuilder();
+            int count = 0;
+            for (int j = 0; j < attrs.length;j++){
+                if (j-1 >= 0 && attrs[j] != attrs[j-1]){
+                    builder.append(count).append(attrs[j-1]);
+                    count = 0;
+                }
+                count ++;
+            }
+            builder.append(count).append(attrs[attrs.length - 1]);
+            result = builder.toString();
+            i++;
+        }
+        return result;
+    }
 }
