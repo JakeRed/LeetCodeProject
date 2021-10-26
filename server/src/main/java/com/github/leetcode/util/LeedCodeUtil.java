@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 刷题util
@@ -728,5 +729,112 @@ public class LeedCodeUtil {
             i++;
         }
         return result;
+    }
+
+    /**
+     * https://leetcode-cn.com/problems/add-strings/
+     * @param num1
+     * @param num2
+     * @return
+     * */
+    public String addStrings(String num1, String num2) {
+        if (num1.length() == 0 || num2.length() == 0){
+            return num1.length() == 0?num2:num1;
+        }
+        Map<Character,Integer> POWER = new HashMap<>();
+        POWER.put('0',0);
+        POWER.put('1',1);
+        POWER.put('2',2);
+        POWER.put('3',3);
+        POWER.put('4',4);
+        POWER.put('5',5);
+        POWER.put('6',6);
+        POWER.put('7',7);
+        POWER.put('8',8);
+        POWER.put('9',9);
+        char[] num1s = num1.toCharArray();
+        char[] num2s = num2.toCharArray();
+        int num1sCount = num1s.length-1;
+        int num2sCount = num2s.length-1;
+        int addOne = 0;
+        StringBuilder result = new StringBuilder();
+        while (num1sCount >= 0 && num2sCount >= 0){
+            int count = POWER.get(num1s[num1sCount]) + POWER.get(num2s[num2sCount]) + addOne;
+            addOne = count >= 10?1:0;
+            result.insert(0,count%10);
+            num1sCount --;
+            num2sCount --;
+        }
+        while (num1sCount>=0){
+            int count = POWER.get(num1s[num1sCount])  + addOne;
+            addOne = count >= 10?1:0;
+            result.insert(0,count%10);
+            num1sCount --;
+        }
+        while (num2sCount>=0){
+            int count = POWER.get(num2s[num2sCount])  + addOne;
+            addOne = count >= 10?1:0;
+            result.insert(0,count%10);
+            num2sCount --;
+        }
+        if (addOne > 0){
+            result.insert(0,addOne);
+        }
+        return result.toString();
+    }
+
+    /**
+     * https://leetcode-cn.com/problems/swap-nodes-in-pairs/
+     * @param head
+     * @return
+     */
+    public ListNode swapPairs(ListNode head) {
+        int count = 0;
+        ListNode next = head;
+        ListNode header = head;
+        while (next != null){
+            count ++;
+            ListNode nextTemp = next.next;
+            if (count % 2 != 0){
+                header = next;
+                ListNode countHeader = next;
+                for (int i = 0 ; i < 3; i++){
+                    if (countHeader.next != null){
+                        countHeader = countHeader.next;
+                    } else {
+                        break;
+                    }
+                }
+                if (countHeader != next && countHeader != next.next){
+                    next.next = countHeader;
+                } else {
+                    next.next = null;
+                }
+            } else {
+                next.next = header;
+                if (count == 2){
+                    head = next;
+                }
+            }
+            next = nextTemp;
+        }
+        return head;
+    }
+
+    /**
+     * https://leetcode-cn.com/problems/remove-duplicates-from-sorted-list/
+     * @param head
+     * @return
+     */
+    public ListNode deleteDuplicates(ListNode head) {
+        ListNode next = head;
+        while (next != null){
+            if (next.next != null && next.val == next.next.val){
+                next.next = next.next.next;
+            } else {
+                next = next.next;
+            }
+        }
+        return head;
     }
 }
